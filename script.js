@@ -1,75 +1,88 @@
 "use strict";
 
- let numberOfFilms;
-function start(){
-    numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?');
 
-    while(numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)){
- numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?');
-    }
-}
-start();
 const pesonalMovieDB = {
-    count:numberOfFilms, 
+    count:0, 
     movies: {},
     actors: {},
     genres: [],
-    privat: false
-};
-
-function rememberMyFilms(){
-    for(let i = 0; i < 2; i++){
-        const a = prompt('какой фильм смотрел?', ''),
-              b = prompt('на скок оценишь?', '');
-              
+    privat: false,
+    start: function(){
+        pesonalMovieDB.count = +prompt('Сколько фильмов вы уже посмотрели?');
     
-              if(a != null && b != null && a!= '' && b != '' && a.length < 50  ){
-                pesonalMovieDB.movies[a] = b;
-                  console.log('done');
-    
-              } else {
-                  console.log('error');
-                  i--;
-              }
-    }
- }
- rememberMyFilms();
-      
-function detectPersonalLevel(){
-    if(pesonalMovieDB.count == 10 ){
-        console.log('просмотрено довольно мало фильмов');
-
-        } else if(pesonalMovieDB.count > 10 && pesonalMovieDB.count < 30 ){
-              console.log('вы классический зритель');
-        }else if(pesonalMovieDB.count > 30){
-            console.log('вы киноман');
-        }else{
-            console.log('error');
+        while(pesonalMovieDB.count == '' || pesonalMovieDB.count == null || isNaN(pesonalMovieDB.count)){
+            pesonalMovieDB.count = +prompt('Сколько фильмов вы уже посмотрели?');
         }
+    },
+    rememberMyFilms: function(){
+        for(let i = 0; i < 2; i++){
+            const a = prompt('какой фильм смотрел?', ''),
+                  b = prompt('на скок оценишь?', '');
+    
+    
+                  if(a != null && b != null && a!= '' && b != '' && a.length < 50  ){
+                    pesonalMovieDB.movies[a] = b;
+                      console.log('done');
+    
+                  } else {
+                      console.log('error');
+                      i--;
+                  }
+        }
+     },
+     detectPersonalLevel: function(){
+        if(pesonalMovieDB.count == 10 ){
+            console.log('просмотрено довольно мало фильмов');
+     if(pesonalMovieDB.count > 10 && pesonalMovieDB.count < 30 ){
+                  console.log('вы классический зритель');
+            }else if(pesonalMovieDB.count > 30){
+                console.log('вы киноман');
+            }else if(pesonalMovieDB.count < 10){
+                console.log('просмотрено довольно мало фильмов');
 
-}
-detectPersonalLevel();
+            } else {
+                console.log('error');
+            }
+    
+              } 
+                  
+              },
+              ShowMyDB: function(){
 
-
-function ShowMyDB(){
-
-     if(pesonalMovieDB.privat == false){
-
-        console.log(pesonalMovieDB);
-     } else {
-            console.log('error');
-     }
+          if(pesonalMovieDB.privat == false){
      
-}
+             console.log(pesonalMovieDB);
+          } else {
+                 console.log('error');
+          }
+     
+     },
+     toggleVisibleMyDB: function(){
+        if(pesonalMovieDB.privat ){
+            pesonalMovieDB.privat = false;
+        }else{
+            pesonalMovieDB.privat = true;
+        }
+    },
+     writeYourGenres: function(){
+        for(let i = 1; i <= 3; i++){
+            let genre = prompt(`Ваш любимый жанр под номером ${i}`);
 
-ShowMyDB(pesonalMovieDB.privat);
+            if(genre === '' || genre === null){
+                console.log('Вы ввели некоректные данные');
+             i--;
+            }else{
+                pesonalMovieDB.genres[i - 1] = genre;
+            }
+           
+        } 
 
-function writeYourGenres(){
-    for(let i = 1; i <= 3; i++){
-        const genre = prompt(`Ваш любимы жанр под номером ${i}`);
-        pesonalMovieDB.genres[i - 1] = genre;
+        pesonalMovieDB.genres.forEach((item, i) => {
+            console.log(`Любимый жанр ${i + 1}, - это ${item}  `);
+        });
+
+        
+
     }
-}
-writeYourGenres();
-
-console.log(ShowMyDB());
+    
+};
